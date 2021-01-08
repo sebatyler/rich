@@ -59,7 +59,9 @@ gem 'htmlbeautifier'
 gem 'rubocop', require: false
 
 # chart
-gem "chartkick"
+gem 'chartkick'
 
 # env
 gem 'dotenv-rails', groups: [:development, :test]
+
+gem 'rest-client'

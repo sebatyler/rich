@@ -60,3 +60,6 @@ gem 'rubocop', require: false
 
 # chart
 gem "chartkick"
+
+# env
+gem 'dotenv-rails', groups: [:development, :test]

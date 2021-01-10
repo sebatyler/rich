@@ -22,9 +22,35 @@ class CoinoneController < ApplicationController
     res = RestClient.post url, payload, {'X-COINONE-PAYLOAD': payload, 'X-COINONE-SIGNATURE': signature}
     result = JSON.parse(res.body)
 
-    result.select! {|key, val| val.is_a?(Hash) && val['balance'].to_f.positive?}
-    result.transform_values! {|val| val['balance'].to_f }
+    watch_coins = ['btc', 'eth', 'ltc', 'bch']
+
+    result.select! {|key, val| watch_coins.include?(key) && val.is_a?(Hash) && val['balance'].to_f.positive?}
+    result.transform_values! {|val| {balance: val['balance'].to_f}}
+
+    url = origin + '/ticker'
+    threads = []
+
+    result.each do |key, val|
+      threads << Thread.new do
+        res = RestClient.get("#{url}?currency=#{key}")
+        Thread.current[:body] = JSON.parse(res.body)
+      end
+    end
+
+    krw_sum = 0
+
+    threads.each do |t|
+      t.join
+      currency = t[:body]['currency']
+      balance = result[currency][:balance]
+      krw = (balance * t[:body]['last'].to_f).to_i
+      krw_sum += krw
+      result[currency][:krw] = krw
+      result[currency][:krw_yesterday] = (balance * t[:body]['yesterday_last'].to_f).to_i
+      # result[currency][:ticker] = t[:body]
+    end
 
     puts result
+    puts krw_sum
   end
 end

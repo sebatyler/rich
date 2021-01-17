@@ -37,20 +37,26 @@ class CoinoneController < ApplicationController
       end
     end
 
-    krw_sum = 0
+    sum = {krw: 0, krw_yesterday: 0}
 
     threads.each do |t|
       t.join
       currency = t[:body]['currency']
       balance = result[currency][:balance]
       krw = (balance * t[:body]['last'].to_f).to_i
-      krw_sum += krw
+      sum[:krw] += krw
       result[currency][:krw] = krw
-      result[currency][:krw_yesterday] = (balance * t[:body]['yesterday_last'].to_f).to_i
+
+      krw_yesterday = (balance * t[:body]['yesterday_last'].to_f).to_i
+      sum[:krw_yesterday] += krw_yesterday
+      result[currency][:krw_yesterday] = krw_yesterday
       # result[currency][:ticker] = t[:body]
     end
 
     puts result
-    puts krw_sum
+    puts sum
+
+    @balance = result
+    @sum = sum
   end
 end

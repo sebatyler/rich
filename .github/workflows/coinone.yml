@@ -3,10 +3,11 @@ name: Coinone-Alarm
 on:
   schedule:
     - cron: '*/5 * * * *'
+  workflow_dispatch:
 
 jobs:
-  coinone_alarm:
-    name: Alarm Coinone
+  alarm:
+    name: Coinone
     runs-on: ubuntu-latest
 
     steps:

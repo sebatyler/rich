@@ -1,0 +1,14 @@
+<ul>
+<% @sum.each do |k, v| %>
+  <li><%= k %>: <%= show_number k, v %></li>
+<% end %>
+</ul>
+
+<% @result.each do |coin, val| %>
+  <p><%= coin.upcase %></p>
+  <ul>
+  <% val.each do |k, v| %>
+    <li><%= k %>: <%= show_number k, v %></li>
+  <% end %>
+  </ul>
+<% end %>

@@ -39,14 +39,23 @@ module CoinoneHelper
       currency = t[:body]['currency']
       balance = result[currency][:balance]
       krw = (balance * t[:body]['last'].to_f).to_i
+
+      if krw < 10000
+        result.delete currency
+        next
+      end
+
       sum[:krw] += krw
       result[currency][:krw] = krw
 
       krw_yesterday = (balance * t[:body]['yesterday_last'].to_f).to_i
       sum[:krw_yesterday] += krw_yesterday
       result[currency][:krw_yesterday] = krw_yesterday
+      result[currency][:diff] = (krw - krw_yesterday) / krw_yesterday.to_f
       # result[currency][:ticker] = t[:body]
     end
+
+    sum[:diff] = (sum[:krw] - sum[:krw_yesterday]) / sum[:krw_yesterday].to_f
 
     {result: result, sum: sum}
   end

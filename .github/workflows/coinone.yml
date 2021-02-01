@@ -24,9 +24,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gems-
 
-      - name: Install and alarm
+      - name: Install
         run: |
           gem install bundler
           bundle config path vendor/bundle
           bundle install --jobs 4 --retry 3
-          bundle exec rails runner lib/coinone.rb
+
+      - name: Alarm
+        run: |
+          ls -l
+          bin/rails runner lib/coinone.rb

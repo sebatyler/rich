@@ -2,7 +2,7 @@ name: Coinone-Alarm
 
 on:
   schedule:
-    - cron: '* * * * *'
+    - cron: '*/5 * * * *'
 
 jobs:
   coinone_alarm:

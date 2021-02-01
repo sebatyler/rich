@@ -33,4 +33,5 @@ jobs:
       - name: Alarm
         run: |
           ls -l
-          bin/rails runner lib/coinone.rb
+          ls -l lib
+          bin/rails runner lib/coinone.rb || echo failed

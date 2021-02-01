@@ -11,10 +11,6 @@ module CoinoneHelper
 
     # use strict_encode64 to remove new line
     payload = Base64.strict_encode64(json_param)
-    puts "at: #{access_token}"
-    puts "sk: #{secret_key}"
-    puts "json: #{json_param}"
-    puts "payload: #{payload}"
 
     signature = OpenSSL::HMAC.hexdigest(OpenSSL::Digest::Digest.new('sha512'), secret_key, payload)
 

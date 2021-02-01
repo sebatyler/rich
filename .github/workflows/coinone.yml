@@ -2,10 +2,10 @@ name: Coinone-Alarm
 
 on:
   schedule:
-    - cron:  '*/1 * * * *'
+    - cron: '* * * * *'
 
 jobs:
-  coinone-alarm:
+  coinone_alarm:
     name: Alarm Coinone
     runs-on: ubuntu-latest
 

@@ -65,3 +65,5 @@ gem 'chartkick'
 gem 'dotenv-rails', groups: [:development, :test]
 
 gem 'rest-client'
+
+gem 'telegram-bot-ruby'

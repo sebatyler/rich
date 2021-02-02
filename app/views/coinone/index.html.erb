@@ -1,9 +1,9 @@
 <% if @pre %><pre><% end %>
-<b>Coinone Balance: <%= show_number @sum[:diff], 'diff' %></b>
+<<%= tag_by_diff @sum[:diff] %>>Coinone Balance: <%= show_number @sum[:diff], 'diff' %></<%= tag_by_diff @sum[:diff] %>>
 - 오늘: <%= show_number @sum[:krw], 'krw' %>
 - 어제: <%= show_number @sum[:krw_yesterday], 'krw' %>
 <% @result.each do |coin, val| %>
-<b><%= coin.upcase %>: <%= show_number val[:diff], 'diff' %> / <%= show_number val[:balance] %></b>
+<<%= tag_by_diff val[:diff] %>><%= coin.upcase %>: <%= show_number val[:diff], 'diff' %> / <%= show_number val[:balance] %></<%= tag_by_diff val[:diff] %>>
 - 오늘: <%= show_number val[:krw], 'krw', '' %>/ <%= show_number val[:last], 'krw' %>
 - 어제: <%= show_number val[:krw_yesterday], 'krw', '' %>/ <%= show_number val[:yesterday_avg], 'krw' %>
 <% end %>

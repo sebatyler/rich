@@ -5,7 +5,13 @@ end
 require 'telegram_bot'
 
 bot = TelegramBot.new(token: ENV['TELEGRAM_BOT_TOKEN'])
-message = bot.get_updates.last
+messages = bot.get_updates
+
+puts messages.map(&:inspect)
+# TODO: apply some commands
+
+message = messages.last
+
 
 ret = Coinone.get_balance
 text = ApplicationController.render template: 'coinone/index', assigns: ret, layout: false

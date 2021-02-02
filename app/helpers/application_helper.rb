@@ -10,4 +10,8 @@ module ApplicationHelper
       number_to_currency val, unit: unit || ''
     end
   end
+
+  def tag_by_diff(diff)
+    diff.positive? ? 'b' : 'i'
+  end
 end

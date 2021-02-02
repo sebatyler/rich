@@ -5,6 +5,10 @@ require 'Base64'
 
 class CoinoneController < ApplicationController
   def index
-    puts helpers.get_balance
+    ret = helpers.get_balance
+    puts ret
+
+    @sum = ret[:sum]
+    @result = ret[:result]
   end
 end

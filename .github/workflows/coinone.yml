@@ -34,8 +34,6 @@ jobs:
         env:
           COINONE_ACCESS_TOKEN: ${{ secrets.COINONE_ACCESS_TOKEN }}
           COINONE_SECRET_KEY: ${{ secrets.COINONE_SECRET_KEY }}
-          DOMAIN: ${{ secrets.DOMAIN }}
-          MAIL_USER: ${{ secrets.MAIL_USER }}
-          MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
         run: |
           bin/rails runner lib/coinone.rb

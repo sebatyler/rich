@@ -1,2 +1,8 @@
-<h1>Coinone#index</h1>
-<p>Find me in app/views/coinone/index.html.erb</p>
+<b>Coinone Balance: <%= show_number 'diff', @sum[:diff] %></b>
+- 오늘: <%= show_number 'krw', @sum[:krw] %>
+- 어제: <%= show_number 'krw', @sum[:krw_yesterday] %>
+<% @result.each do |coin, val| %>
+<b><%= coin.upcase %>: <%= show_number 'diff', val[:diff] %> / <%= val[:balance] %></b>
+- 오늘: <%= show_number 'krw', val[:krw] %>
+- 어제: <%= show_number 'krw', val[:krw_yesterday] %>
+<% end %>

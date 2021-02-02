@@ -2,10 +2,16 @@ class Coinone
   extend CoinoneHelper
 end
 
-ret = Coinone.get_balance
+require 'telegram_bot'
 
-CoinoneMailer.with(
-  recipient: ENV['MAIL_USER'] + '@gmail.com',
-  result: ret[:result],
-  sum: ret[:sum]
-).balance.deliver_now
+bot = TelegramBot.new(token: ENV['TELEGRAM_BOT_TOKEN'])
+message = bot.get_updates.last
+
+ret = Coinone.get_balance
+text = ApplicationController.render template: 'coinone/index', assigns: ret, layout: false
+
+message.reply do |reply|
+  reply.text = text
+  reply.parse_mode = 'HTML'
+  reply.send_with(bot)
+end

@@ -17,7 +17,7 @@ module CoinoneHelper
     res = RestClient.post url, payload, {'X-COINONE-PAYLOAD': payload, 'X-COINONE-SIGNATURE': signature}
     result = JSON.parse(res.body)
 
-    watch_coins = ['btc', 'eth', 'ltc', 'bch', 'xrp']
+    watch_coins = ['btc', 'eth', 'ltc', 'bch', 'xrp', 'bsv']
 
     result.select! {|key, val| watch_coins.include?(key) && val.is_a?(Hash) && val['balance'].to_f.positive?}
     result.transform_values! {|val| {balance: val['balance'].to_f}}

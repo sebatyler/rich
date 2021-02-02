@@ -10,5 +10,6 @@ class CoinoneController < ApplicationController
 
     @sum = ret[:sum]
     @result = ret[:result]
+    @pre = true
   end
 end

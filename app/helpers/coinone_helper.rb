@@ -36,9 +36,12 @@ module CoinoneHelper
 
     threads.each do |t|
       t.join
-      currency = t[:body]['currency']
+      currency, *last_prices = t[:body].values_at('currency', 'last', 'yesterday_high', 'yesterday_low')
+      last, yesterday_high, yesterday_low = last_prices.map(&:to_f)
+      yesterday_avg = (yesterday_high + yesterday_low) / 2
+
       balance = result[currency][:balance]
-      krw = (balance * t[:body]['last'].to_f).to_i
+      krw = (balance * last).to_i
 
       if krw < 10000
         result.delete currency
@@ -46,12 +49,14 @@ module CoinoneHelper
       end
 
       sum[:krw] += krw
-      result[currency][:krw] = krw
-
-      krw_yesterday = (balance * t[:body]['yesterday_last'].to_f).to_i
+      result[currency].update(krw: krw, last: last)
+      krw_yesterday = (balance * yesterday_avg).to_i
       sum[:krw_yesterday] += krw_yesterday
-      result[currency][:krw_yesterday] = krw_yesterday
-      result[currency][:diff] = (krw - krw_yesterday) / krw_yesterday.to_f
+      result[currency].update(
+        krw_yesterday: krw_yesterday,
+        yesterday_avg: yesterday_avg,
+        diff: (krw - krw_yesterday) / krw_yesterday.to_f
+      )
       # result[currency][:ticker] = t[:body]
     end
 

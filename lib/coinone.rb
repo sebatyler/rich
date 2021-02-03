@@ -2,22 +2,29 @@ class Coinone
   extend CoinoneHelper
 end
 
-require 'telegram_bot'
-
-bot = TelegramBot.new(token: ENV['TELEGRAM_BOT_TOKEN'])
-messages = bot.get_updates
-
-puts messages.map(&:inspect)
-# TODO: apply some commands
-
-message = messages.last
-
-
 ret = Coinone.get_balance
 text = ApplicationController.render template: 'coinone/index', assigns: ret, layout: false
 
-message.reply do |reply|
-  reply.text = text
-  reply.parse_mode = 'HTML'
-  reply.send_with(bot)
+require 'telegram_bot'
+
+bot = TelegramBot.new(token: ENV['TELEGRAM_BOT_TOKEN'])
+messages = bot.get_updates(timeout: 5)
+
+# TODO: apply some commands and save it
+
+if messages
+  puts messages.map(&:inspect)
+
+  message = messages.last
+  channel_id = message.chat.id
+else
+  puts 'no messages'
+  channel_id = '461950516'
 end
+
+channel = TelegramBot::Channel.new(id: channel_id)
+message = TelegramBot::OutMessage.new
+message.chat = channel
+message.parse_mode = 'HTML'
+message.text = text
+message.send_with(bot)

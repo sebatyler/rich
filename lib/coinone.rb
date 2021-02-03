@@ -19,7 +19,7 @@ if messages
   channel_id = message.chat.id
 else
   puts 'no messages'
-  channel_id = '461950516'
+  channel_id = ENV['TELEGRAM_BOT_CHANNEL_ID']
 end
 
 channel = TelegramBot::Channel.new(id: channel_id)

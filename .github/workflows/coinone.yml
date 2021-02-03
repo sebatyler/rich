@@ -35,5 +35,6 @@ jobs:
           COINONE_ACCESS_TOKEN: ${{ secrets.COINONE_ACCESS_TOKEN }}
           COINONE_SECRET_KEY: ${{ secrets.COINONE_SECRET_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_BOT_CHANNEL_ID: ${{ secrets.TELEGRAM_BOT_CHANNEL_ID }}
         run: |
           bin/rails runner lib/coinone.rb

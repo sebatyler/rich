@@ -12,7 +12,7 @@ messages = bot.get_updates(timeout: 5)
 
 # TODO: apply some commands and save it
 
-if messages
+if messages && !messages.empty?
   puts messages.map(&:inspect)
 
   message = messages.last

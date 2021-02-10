@@ -5,6 +5,8 @@ end
 ret = Coinone.get_balance
 text = ApplicationController.render template: 'coinone/index', assigns: ret, layout: false
 
+# TODO: check -10% or +5%
+
 require 'telegram_bot'
 
 bot = TelegramBot.new(token: ENV['TELEGRAM_BOT_TOKEN'])

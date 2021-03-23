@@ -9,6 +9,8 @@ jobs:
   alarm:
     name: Coinone
     runs-on: ubuntu-latest
+    env:
+      BUNDLE_GEMFILE: Gemfile
 
     steps:
       - uses: actions/checkout@v2

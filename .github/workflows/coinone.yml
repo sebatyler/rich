@@ -10,12 +10,10 @@ jobs:
     name: Coinone
     runs-on: ubuntu-latest
     env:
-      BUNDLE_GEMFILE: Gemfile
+      BUNDLE_FORCE_RUBY_PLATFORM: x86_64-linux
 
     steps:
       - uses: actions/checkout@v2
-
-      - run: bundle lock --add-platform x86_64-linux
 
       - uses: ruby/setup-ruby@v1
         with:

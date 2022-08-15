@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'coinone/index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-
-  get "bitpanda/index"
+  get 'coinone/index'
 end

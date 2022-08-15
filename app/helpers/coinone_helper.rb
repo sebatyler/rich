@@ -20,13 +20,14 @@ module CoinoneHelper
     result.select! {|key, val| key != 'krw' && val.is_a?(Hash) && val['balance'].to_f.positive?}
     result.transform_values! {|val| {balance: val['balance'].to_f}}
 
-    url = origin + '/ticker'
+    url = origin + '/public/v2/chart/KRW'
     threads = []
 
     result.each do |key, val|
       threads << Thread.new do
-        res = RestClient.get("#{url}?currency=#{key}")
+        res = RestClient.get("#{url}/#{key.upcase}?interval=1h")
         Thread.current[:body] = JSON.parse(res.body)
+        Thread.current[:currency] = key
       end
     end
 
@@ -34,7 +35,16 @@ module CoinoneHelper
 
     threads.each do |t|
       t.join
-      currency, *last_prices = t[:body].values_at('currency', 'last', 'yesterday_high', 'yesterday_low')
+
+      currency = t[:currency]
+
+      if t[:body]['result'] == 'error'
+        result.delete currency
+        next
+      end
+
+      chart = t[:body]['chart']
+      *last_prices = chart[11].values_at('close', 'high', 'low')
       last, yesterday_high, yesterday_low = last_prices.map(&:to_f)
       yesterday_avg = (yesterday_high + yesterday_low) / 2
 

@@ -62,7 +62,7 @@ gem 'rubocop', require: false
 gem 'chartkick'
 
 # env
-gem 'dotenv-rails', groups: [:development, :test]
+gem 'dotenv-rails', groups: [:development, :test, :production]
 
 gem 'rest-client'
 
